@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
+<head>
+</head>
 
-  <head>
-    <meta charset='utf-8'>
 
-    <title>Blueschool</title>
-  </head>
-
-  
 <script type="text/javascript">
 //-----------各种升级价参数-----------------------------
 var config = {
@@ -121,7 +115,7 @@ function folkGetSpeed () {
 function folkUpdate(){
 	
 	__folk_tick = __folk_tick + __folk_ad +  folkGetSpeed();
-	
+
 	if (__folk_ad>0) {
 		--__folk_ad;
 		document.getElementById("f_ad").innerText = "效果:"+__folk_ad;
@@ -250,6 +244,8 @@ function updateLogic (argument) {
 	</div>
 	<div>
 		<label id="l_graduate" text="0000" y="30">毕业</label>
+		<button id="gb_sell" onclick="graduateSell();" style="width:85px;height:20px;">出售</button>
+
 	</div>
 	<div>
 		<label id="l_graduate_price" text="0000" y="30">学生价格:￥100</label>
@@ -257,9 +253,6 @@ function updateLogic (argument) {
 	<div>
 		<label id="f_ad" text="0000" y="30">Lv.0</label>
 		<button id="fb_ad" onclick="folkAd();" style="width:85px;height:20px;">发小广告￥10</button>
-	</div>
-	<div>
-		<button id="gb_sell" onclick="graduateSell();" style="width:85px;height:20px;">出售</button>
 	</div>
 
 	<div>
@@ -287,5 +280,3 @@ function updateLogic (argument) {
 	</div>
 
 </body>
-
-</html>
