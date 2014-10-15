@@ -224,59 +224,75 @@ function updateLogic (argument) {
 	}
 	graduateUpdate();
 	gold = gold + tick_gold;
-	console.info("这是info");
 	document.getElementById("l_gold").innerText = "资金：￥"+gold;
 	document.getElementById("l_train").innerText = "培训中："+train_count+"/"+trainGetMax()+"人";
 	document.getElementById("l_graduate").innerText = "待业："+graduate_count+"/"+graduateGetCountMax()+"人";
 	
 }
 
-
-
 </script>
+
+
 
 <body onLoad="setInterval('updateLogic()',500);">
 	<div>
-		<label id="l_gold" text="0000" y="30">资金</label>
-	</div>
-	<div>
-		<label id="l_train" text="0000" y="30">培训</label>
-	</div>
-	<div>
-		<label id="l_graduate" text="0000" y="30">毕业</label>
-		<button id="gb_sell" onclick="graduateSell();" style="width:85px;height:20px;">出售</button>
+		<div>
+			<div>
+				<label id="l_gold" text="0000" y="30">资金</label>
+			</div>
+			<div>
+				<label id="l_train" text="0000" y="30">培训</label>
+			</div>
+			<div>
+				<label id="l_graduate" text="0000" y="30">毕业</label>
+				<button id="gb_sell" onclick="graduateSell();" style="width:85px;height:20px;">出售</button>
 
-	</div>
-	<div>
-		<label id="l_graduate_price" text="0000" y="30">学生价格:￥100</label>
-	</div>
-	<div>
-		<label id="f_ad" text="0000" y="30">Lv.0</label>
-		<button id="fb_ad" onclick="folkAd();" style="width:85px;height:20px;">发小广告￥10</button>
-	</div>
+			</div>
+			<div>
+				<label id="l_graduate_price" text="0000" y="30">学生价格:￥100</label>
+			</div>
+			<div>
+				<label id="f_ad" text="0000" y="30">Lv.0</label>
+				<button id="fb_ad" onclick="folkAd();" style="width:85px;height:20px;">发小广告￥10</button>
+			</div>
 
-	<div>
-		<label id="f_speed" text="0000" y="30">Lv.0</label>
-		<button id="fb_speed" onclick="folkSpeedLvlup();" style="width:85px;height:20px;">招生速度</button>
-	</div>
+			<div>
+				<label id="f_speed" text="0000" y="30">Lv.0</label>
+				<button id="fb_speed" onclick="folkSpeedLvlup();" style="width:85px;height:20px;">招生速度</button>
+			</div>
 
-	<div>
-		<label id="c_speed" text="0000" y="30">Lv.0</label>
-		<button id="cb_speed" onclick="trainSpeedLvlup();" style="width:85px;height:20px;">培训速度</button>
-	</div>
-	<div>
-		<label id="c_count" text="0000" y="30">Lv.0</label>
-		<button id="cb_count" onclick="trainCountMaxLvlup();" style="width:85px;height:20px;">学院规模</button>
-	</div>
+			<div>
+				<label id="c_speed" text="0000" y="30">Lv.0</label>
+				<button id="cb_speed" onclick="trainSpeedLvlup();" style="width:85px;height:20px;">培训速度</button>
+			</div>
+			<div>
+				<label id="c_count" text="0000" y="30">Lv.0</label>
+				<button id="cb_count" onclick="trainCountMaxLvlup();" style="width:85px;height:20px;">学院规模</button>
+			</div>
 
 
-	<div>
-		<label id="g_price" text="0000" y="30">Lv.0</label>
-		<button id="gb_price" onclick="graduatePriceLvlup();" style="width:85px;height:20px;">钻研挖掘技术</button>
+			<div>
+				<label id="g_price" text="0000" y="30">Lv.0</label>
+				<button id="gb_price" onclick="graduatePriceLvlup();" style="width:85px;height:20px;">钻研挖掘技术</button>
+			</div>
+			<div>
+				<label id="g_count" text="0000" y="30">Lv.0</label>
+				<button id="gb_count" onclick="graduateCountLvlup();" style="width:85px;height:20px;">就业率</button>
+			</div>
+		</div>
+		
+		<!--- 下面的部分是作者放的广告，没有用处  -->
+		
+		<div>
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:300px;height:600px"
+			     data-ad-client="ca-pub-5542337649530585"
+			     data-ad-slot="5045965757"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
+		<!--- 广告结束  -->
 	</div>
-	<div>
-		<label id="g_count" text="0000" y="30">Lv.0</label>
-		<button id="gb_count" onclick="graduateCountLvlup();" style="width:85px;height:20px;">就业率</button>
-	</div>
-
 </body>
