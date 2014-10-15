@@ -3,77 +3,289 @@
 
   <head>
     <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Blueschool : ">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>Blueschool</title>
   </head>
 
-  <body>
+  
+<script type="text/javascript">
+//-----------各种升级价参数-----------------------------
+var config = {
+	folk_ad_price : 10,
+	folk_speed_price : 100,
+	train_count_price : 100,
+	train_speed_price : 100,
+	graduate_count_price : 100,
+	graduate_price_price : 100
+}
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/SD216814/BlueSchool">View on GitHub</a>
+var tick_gold = 100;
 
-          <h1 id="project_title">Blueschool</h1>
-          <h2 id="project_tagline"></h2>
+//-----------各种等级参数-----------------------------
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/SD216814/BlueSchool/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/SD216814/BlueSchool/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+var folk_speed_lvl = 0;//
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+var graduate_price_lvl = 0;//
+var graduate_count_max_lvl = 0;//
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+var train_speed_lvl = 0;//
+var train_count_max_lvl = 0;//
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+//----------------------------------------
+var gold = 0;
+var train_count=0;
+var graduate_count=0;
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+//----------------------------------------
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+// function upCSpeed (argument) {
+// 	train_count=1+train_count;
+// 	document.getElementById("c_speed").innerText = "Lv."+train_count;
+// 	document.getElementById("cb_speed").innerHTML = "c_speed";
+// 	// body...
+// }
+//-------------UTL---------------------------
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+function checkConsume(val){
+	if( gold < val )return false;
+	gold = gold - val;
+	return true;
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+}
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+//----------------------------------------
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+function folkAd (argument) {
+	if( checkConsume(config.folk_ad_price) )
+	__folk_ad = __folk_ad+3;
+	document.getElementById("f_ad").innerText = "效果:"+__folk_ad;
+}
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+function folkSpeedLvlup (argument) {
+	if( checkConsume( config.folk_speed_price*Math.pow(2,folk_speed_lvl) ) )
+		folk_speed_lvl=1+folk_speed_lvl;
+	
+	document.getElementById("f_speed").innerHTML = "效果:"+folk_speed_lvl;
+}
+function trainCountMaxLvlup (argument) {
+	if( checkConsume( config.train_count_price*Math.pow(2,  train_count_max_lvl) ) )
+		train_count_max_lvl=1+train_count_max_lvl;
+	document.getElementById("c_count").innerHTML = "Lv."+train_count_max_lvl;
+}
+function trainSpeedLvlup (argument) {
+	if( checkConsume( 
+		config.train_speed_price*Math.pow(2, train_speed_lvl) ) )
+		train_speed_lvl=1+train_speed_lvl;
+	document.getElementById("c_speed").innerHTML = "Lv."+train_speed_lvl;
+}
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+function graduateSell (argument) {
+	if( graduate_count < 1 )return;
+	gold = gold+graduate_count * graduateGetPrice();
+	graduate_count = 0;
+}
+function graduatePriceLvlup (argument) {
+	if( checkConsume( 
+		config.graduate_count_price*Math.pow(2, graduate_price_lvl) ) )
+		graduate_price_lvl=1+graduate_price_lvl;
+	document.getElementById("g_price").innerHTML = "Lv."+graduate_price_lvl;
+	document.getElementById("l_graduate_price").innerText = "学生价格:￥"+graduateGetPrice();
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Blueschool maintained by <a href="https://github.com/SD216814">SD216814</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+}
+function graduateCountLvlup (argument) {
+	if( checkConsume( 
+		config.graduate_price_price*Math.pow(2, graduate_count_max_lvl) ) )
+		graduate_count_max_lvl=1+graduate_count_max_lvl;
+	document.getElementById("g_count").innerHTML = "Lv."+graduate_count_max_lvl;
+}
 
-    
 
-  </body>
+
+
+
+//======================================
+//---------------处理逻辑-----------------
+//======================================
+
+
+
+
+var __folk_tick = 0;
+var __folk_ad = 0;
+
+function folkGetSpeed () {
+	return folk_speed_lvl+1
+}
+
+function folkUpdate(){
+	
+	__folk_tick = __folk_tick + __folk_ad +  folkGetSpeed();
+	
+	if (__folk_ad>0) {
+		--__folk_ad;
+		document.getElementById("f_ad").innerText = "效果:"+__folk_ad;
+	}
+	if( __folk_tick > 25 ){
+
+		var count_new = parseInt(__folk_tick / 25);
+		__folk_tick = 0;
+		return count_new;
+	}
+	return 0;
+}
+
+
+//----------------------------------------
+
+
+
+
+
+var __train_tick = 0;
+
+function trainGetSpeed () {
+	return train_speed_lvl
+}
+function trainGetMax () {
+	return train_count_max_lvl + 10
+}
+
+function trainAddUnit(val){
+	var max_count = trainGetMax();
+
+	train_count = train_count + val;
+
+	if( train_count > max_count ){
+		train_count = max_count;
+		//todo log 
+	}
+}
+
+function trainUpdate (argument) {
+	// body...
+	if( train_count < 1 ) return 0;
+	__train_tick = __train_tick + trainGetSpeed() + 1;
+
+	if( __train_tick > 25 ){
+		var count_new = parseInt(__train_tick / 25);
+		__train_tick = 0;
+		train_count = train_count - count_new;
+		return count_new;
+	}
+
+	if(Math.random()<0.05){
+		--train_count;
+		//todo Log
+		return 0;
+	}
+	if( Math.random()<0.05 ){
+		gold = gold + parseInt(Math.random()*100);
+		//todo log
+		return 0;
+	}
+	return 0
+}
+
+
+
+//----------------------------------------
+
+
+
+
+var __graduate_tick = 0;
+
+function graduateGetCountMax (argument) {
+	return graduate_count_max_lvl + 10;
+}
+
+function graduateGetPrice (argument) {
+	return 100 + graduate_price_lvl * 20
+}
+
+function graduateAddUnit (val) {
+	graduate_count=val+graduate_count;
+}
+
+function graduateUpdate(){
+	if( graduate_count > graduateGetCountMax() ){
+		if( Math.random() < 0.5 ){
+			//todo log
+			--graduate_count;
+		}
+	}
+
+
+}
+
+function updateLogic (argument) {
+	var new_folk = folkUpdate();
+	if( new_folk > 0 ){
+		trainAddUnit(new_folk)
+	}
+	var new_graduate = trainUpdate();
+	if( new_graduate > 0 ){
+		graduateAddUnit(new_graduate)
+	}
+	graduateUpdate();
+	gold = gold + tick_gold;
+	console.info("这是info");
+	document.getElementById("l_gold").innerText = "资金：￥"+gold;
+	document.getElementById("l_train").innerText = "培训中："+train_count+"/"+trainGetMax()+"人";
+	document.getElementById("l_graduate").innerText = "待业："+graduate_count+"/"+graduateGetCountMax()+"人";
+	
+}
+
+
+
+</script>
+
+<body onLoad="setInterval('updateLogic()',500);">
+	<div>
+		<label id="l_gold" text="0000" y="30">资金</label>
+	</div>
+	<div>
+		<label id="l_train" text="0000" y="30">培训</label>
+	</div>
+	<div>
+		<label id="l_graduate" text="0000" y="30">毕业</label>
+	</div>
+	<div>
+		<label id="l_graduate_price" text="0000" y="30">学生价格:￥100</label>
+	</div>
+	<div>
+		<label id="f_ad" text="0000" y="30">Lv.0</label>
+		<button id="fb_ad" onclick="folkAd();" style="width:85px;height:20px;">发小广告￥50</button>
+	</div>
+	<div>
+		<button id="gb_sell" onclick="graduateSell();" style="width:85px;height:20px;">出售</button>
+	</div>
+
+	<div>
+		<label id="f_speed" text="0000" y="30">Lv.0</label>
+		<button id="fb_speed" onclick="folkSpeedLvlup();" style="width:85px;height:20px;">招生速度</button>
+	</div>
+
+	<div>
+		<label id="c_speed" text="0000" y="30">Lv.0</label>
+		<button id="cb_speed" onclick="trainSpeedLvlup();" style="width:85px;height:20px;">培训速度</button>
+	</div>
+	<div>
+		<label id="c_count" text="0000" y="30">Lv.0</label>
+		<button id="cb_count" onclick="trainCountMaxLvlup();" style="width:85px;height:20px;">学院规模</button>
+	</div>
+
+
+	<div>
+		<label id="g_price" text="0000" y="30">Lv.0</label>
+		<button id="gb_price" onclick="graduatePriceLvlup();" style="width:85px;height:20px;">钻研挖掘技术</button>
+	</div>
+	<div>
+		<label id="g_count" text="0000" y="30">Lv.0</label>
+		<button id="gb_count" onclick="graduateCountLvlup();" style="width:85px;height:20px;">就业率</button>
+	</div>
+
+</body>
+
 </html>
